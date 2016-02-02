@@ -27,7 +27,13 @@ export default (projectConfig, projectToolsConfig) => {
       tools.refresh();
     }
 
-    const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
+    const middlewareOptions = {};
+
+    if (!__DISABLE_SSR__) {
+      middlewareOptions.cookie = req.headers.cookie;
+    }
+
+    const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default(middlewareOptions) : [];
     const history = createMemoryHistory();
     const store = createStore(middleware, history);
 
