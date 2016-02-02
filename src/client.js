@@ -13,7 +13,7 @@ import { createForClient as createRootComponentForClient } from 'rootComponent';
 
 const dest = document.getElementById('content');
 
-const store = createStore(middleware, history, window.__data);
+const store = createStore(middleware(), history, window.__data);
 const routes = getRoutes(store);
 const devComponent = renderDevtools();
 
