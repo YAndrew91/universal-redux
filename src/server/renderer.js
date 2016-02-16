@@ -51,7 +51,8 @@ export default (projectConfig, projectToolsConfig) => {
           rootComponent.createForServer(store, renderProps)
             .then(({ root }) => {
               const content = html(config, tools.assets(), store, res._headers, root);
-              res.status(200).send(content);
+              const pageState = store.getState().page;
+              res.status(pageState && pageState.status || 200).send(content);
             })
             .catch((err) => {
               console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
